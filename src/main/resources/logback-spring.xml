@@ -1,0 +1,77 @@
+<configuration scan="true" scanPeriod="30 seconds">
+
+	<!-- Appender to log to console -->
+	<appender name="console"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			Minimum logging
+			level to be presented in the console logs
+			<level>DEBUG</level>
+		</filter>
+
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			
+			<includeMdcKeyName>sourceSystem</includeMdcKeyName>
+			<includeMdcKeyName>environment</includeMdcKeyName>
+			<includeMdcKeyName>tracePoint</includeMdcKeyName>
+			<includeMdcKeyName>timeNow</includeMdcKeyName>
+			<fieldNames>
+              <!--   <stackTrace>[ignore]</stackTrace>  -->
+            </fieldNames>
+		</encoder>
+	</appender>
+<!-- 
+	<appender name="kafka"
+		class="com.github.danielwegener.logback.kafka.KafkaAppender">
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<includeMdcKeyName>corelationId</includeMdcKeyName>
+			<includeMdcKeyName>sourceSystem</includeMdcKeyName>
+			<includeMdcKeyName>targetSystem</includeMdcKeyName>
+			<includeMdcKeyName>applicationName</includeMdcKeyName>
+			<includeMdcKeyName>interfaceId</includeMdcKeyName>
+			<includeMdcKeyName>businessId</includeMdcKeyName>
+			<includeMdcKeyName>tracePoint</includeMdcKeyName>
+			<includeMdcKeyName>status</includeMdcKeyName>
+			<includeMdcKeyName>environment</includeMdcKeyName>
+			<includeMdcKeyName>elapsedTime</includeMdcKeyName>
+			<fieldNames>
+                <stackTrace>[ignore]</stackTrace>
+            </fieldNames>
+		</encoder>
+		
+		<topic>bsl-ms-logs</topic>
+		<keyingStrategy
+			class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy" />
+		<deliveryStrategy
+			class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
+		
+		<producerConfig>security.protocol=SSL</producerConfig>
+		
+		<producerConfig>security.protocol=SSL</producerConfig>
+		<producerConfig>bootstrap.servers=commerce-dev.cisco.com:9094</producerConfig>
+		<producerConfig>acks=0</producerConfig>
+		<producerConfig>linger.ms=1000</producerConfig>
+		<producerConfig>max.block.ms=0</producerConfig>
+		<producerConfig>ssl.truststore.type=JKS</producerConfig>
+		<producerConfig>ssl.keystore.type=JKS</producerConfig>
+		
+		<producerConfig>ssl.truststore.location=C:\Users\scurrent\Documents\CISCO\keystore\user-truststore.jks</producerConfig>
+		<producerConfig>ssl.truststore.password=changeit</producerConfig>
+		<producerConfig>ssl.keystore.location=C:\Users\scurrent\Documents\CISCO\keystore\user-keystore.jks</producerConfig>
+		<producerConfig>ssl.keystore.password=changeit</producerConfig>
+		<producerConfig>ssl.key.password=bGpabEyrX7LJ</producerConfig>
+		
+		
+		
+		
+	</appender>
+	
+	 -->
+
+	<root level="info">
+		<appender-ref ref="console" />
+		<!-- <appender-ref ref="kafka" /> -->
+	</root>
+
+</configuration>
+
