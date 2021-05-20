@@ -15,6 +15,7 @@
 			<includeMdcKeyName>environment</includeMdcKeyName>
 			<includeMdcKeyName>tracePoint</includeMdcKeyName>
 			<includeMdcKeyName>timeNow</includeMdcKeyName>
+			<includeMdcKeyName>elapsedTime</includeMdcKeyName>
 			<fieldNames>
               <!--   <stackTrace>[ignore]</stackTrace>  -->
             </fieldNames>
