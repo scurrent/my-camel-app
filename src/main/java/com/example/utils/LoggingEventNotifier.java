@@ -6,6 +6,7 @@ import java.util.EventObject;
 import org.apache.camel.Exchange;
 import org.apache.camel.spi.CamelEvent;
 import org.apache.camel.spi.CamelEvent.ExchangeCompletedEvent;
+import org.apache.camel.spi.CamelEvent.ExchangeCreatedEvent;
 import org.apache.camel.spi.CamelEvent.ExchangeSentEvent;
 import org.apache.camel.support.EventNotifierSupport;
 import org.slf4j.Logger;
@@ -21,10 +22,13 @@ public class LoggingEventNotifier extends EventNotifierSupport {
 	@Override
 	public void notify(CamelEvent event) throws Exception {
 
-		if (event instanceof org.apache.camel.spi.CamelEvent.ExchangeCreatedEvent) {
-			// ExchangeCreatedEvent created = (ExchangeCreatedEvent) event;
-			// Logger.info(">>> Created " + created. + " millis to send to external system :
-			// " + created.getEndpoint());
+		if (event instanceof ExchangeCreatedEvent) {
+			 ExchangeCreatedEvent created = (ExchangeCreatedEvent) event;
+			 Exchange exchange = created.getExchange();
+				String route = exchange.getFromRouteId();
+				MDC.put("tracePoint", "START");
+				Logger.info("Event started for exchange on route: " + route);
+				MDC.remove("tracePoint");
 		}
 
 		if (event instanceof ExchangeSentEvent) {
@@ -57,11 +61,12 @@ public class LoggingEventNotifier extends EventNotifierSupport {
 		// events we want
 		setIgnoreExchangeCompletedEvent(false);
 		setIgnoreExchangeSentEvents(false);
+		setIgnoreExchangeCreatedEvent(false);
+//		setIgnoreServiceEvents(false);
+
 		// events we don't want
 		setIgnoreCamelContextEvents(true);
-		setIgnoreServiceEvents(true);
 		setIgnoreRouteEvents(true);
-		setIgnoreExchangeCreatedEvent(true);
 		setIgnoreExchangeFailedEvents(true);
 		setIgnoreExchangeRedeliveryEvents(true);
 	}

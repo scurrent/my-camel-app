@@ -12,10 +12,10 @@ import com.example.utils.PropertyContainer;
 
 
 
-@Component("loggerInterceptor")
-public class LoggerInterceptor implements Processor {
+@Component("loggerInterceptorEnd")
+public class LoggerInterceptorEnd implements Processor {
 	
-	private static final Logger logger = LoggerFactory.getLogger(LoggerInterceptor.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoggerInterceptorEnd.class);
 
 
 	@Autowired
@@ -24,15 +24,13 @@ public class LoggerInterceptor implements Processor {
 	@Override
 	public void process(Exchange exchange) throws Exception {
 
-		
-		long start = System.currentTimeMillis();
 
 		
-		MDC.put("sourceSystem", properties.getSourceSystem());
-		MDC.put("environment", properties.getEnv());
-		MDC.put("timeNow", Long.toString(start));
+		MDC.put("tracePoint", "END");
 		
-		System.out.println("===== LOGGER INTERCEPTOR ONE=========");
+		System.out.println("===== END Route Interceptor=========");
+		logger.info("END  Route");
+		MDC.remove("tracePoint");
 	
 }
 

@@ -19,17 +19,16 @@ public class MySpringBootRouter2 extends RouteBuilder {
 
 	public static final Logger Logger = LoggerFactory.getLogger(MySpringBootRouter2.class);
 	
-	@Autowired
-	LoggerInterceptorTwo loggerInterceptorTwo;
+//	@Autowired
+//	LoggerInterceptorTwo loggerInterceptorTwo;
 	
     @Override
     public void configure() {
     	
     	
-//    	interceptFrom("timer:hello?period={{timer2.period}}").process("interceptLogger").end();
     	
         from("timer:hello?period={{timer2.period}}")
-        .process(loggerInterceptorTwo)
+        .process("loggerInterceptorStart")
         .routeId("hello2")
         	.log(LoggingLevel.INFO, Logger, "Router 2 start")
             .transform().method("myBean2", "saySomething")
@@ -37,7 +36,9 @@ public class MySpringBootRouter2 extends RouteBuilder {
                 .to("log:foo")
             .log(LoggingLevel.INFO, Logger, "Router 2 end")    
             .end()
-            .to("stream:out");
+            .to("stream:out")
+            .process("loggerInterceptorEnd");
+
     }
 
 }
